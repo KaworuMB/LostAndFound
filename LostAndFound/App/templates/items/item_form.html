@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iten Form</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% if item %}Edit Item{% else %}Report New Item{% endif %}</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" value="{{ item.title|default:'' }}" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" required>{{ item.description|default:'' }}</textarea>
+
+    <label for="category">Category:</label>
+    <select name="category" id="category" required>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if item.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="location">Location:</label>
+    <input type="text" name="location" id="location" value="{{ item.location|default:'' }}" required>
+
+    <label for="status">Status:</label>
+    <select name="status" id="status" required>
+        <option value="lost" {% if item.status == "lost" %}selected{% endif %}>Lost</option>
+        <option value="found" {% if item.status == "found" %}selected{% endif %}>Found</option>
+        <option value="claimed" {% if item.status == "claimed" %}selected{% endif %}>Claimed</option>
+    </select>
+
+    <label for="image">Image:</label>
+    <input type="file" name="image" id="image">
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+<a href="{% url 'item_list' %}">Cancel</a>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item detail</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ item.title }}</h2>
+    <p>{{ item.description }}</p>
+    <p>Category: {{ item.category }}</p>
+    <p>Location: {{ item.location }}</p>
+    <p>Status: {{ item.get_status_display }}</p>
+{% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+{% endif %}
+    <a href="{% url 'item_list' %}">Back to list</a>
+{% endblock %}
+</body>
+</html>

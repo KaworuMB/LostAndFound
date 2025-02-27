@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item list</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lost and Found Items</h2>
+<a href="{% url 'item_create' %}" class="btn btn-primary">Report New Item</a>
+<ul>
+    {% for item in items %}
+        <li>
+            <a href="{% url 'item_detail' item.id %}">{{ item.title }}</a> - {{ item.status }}
+            <a href="{% url 'item_update' item.id %}">Edit</a> |
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+</body>
+</html>
